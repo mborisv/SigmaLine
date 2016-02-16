@@ -10,9 +10,11 @@
 
   logger = require('./logger.js');
 
-  sigma = new require('./sigma.js')();
+  sigma = require('./sigma.js');
 
   logger.log('starting');
+
+  sigma.write();
 
   useHttps = config.useHttps();
 

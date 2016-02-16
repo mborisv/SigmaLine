@@ -16,6 +16,14 @@ class Config
   getComPort: ->
     return ini.unsafe(@config.com.port)
 
+  getComConfig: ->
+    {
+      baudRate: parseInt(ini.unsafe(@config.com.baudRate))
+      dataBits:  parseInt(ini.unsafe(@config.com.dataBits))
+      stopBits:  parseInt(ini.unsafe(@config.com.stopBits))
+      parity:  ini.unsafe(@config.com.parity)
+    }
+
   getLogPath: ->
     return ini.unsafe(@config.log.path)
 

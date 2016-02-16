@@ -24,6 +24,15 @@
       return ini.unsafe(this.config.com.port);
     };
 
+    Config.prototype.getComConfig = function() {
+      return {
+        baudRate: parseInt(ini.unsafe(this.config.com.baudRate)),
+        dataBits: parseInt(ini.unsafe(this.config.com.dataBits)),
+        stopBits: parseInt(ini.unsafe(this.config.com.stopBits)),
+        parity: ini.unsafe(this.config.com.parity)
+      };
+    };
+
     Config.prototype.getLogPath = function() {
       return ini.unsafe(this.config.log.path);
     };

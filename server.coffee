@@ -5,10 +5,9 @@ global.CONFIG_FILE = './config.ini'
 
 config = require('./config.js')
 logger = require('./logger.js')
-sigma = new require('./sigma.js')()
-
+sigma = require('./sigma.js')
 logger.log('starting')
-
+sigma.write()
 useHttps = config.useHttps()
 server = if useHttps then require('https') else require('http')
 

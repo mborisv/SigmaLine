@@ -8,7 +8,7 @@ if (cluster.isMaster)
 
   cluster.on('exit', (worker, code, signal) ->
     console.log('Error happened, fork')
-    cluster.fork()
+    ##cluster.fork()
   )
 
 
