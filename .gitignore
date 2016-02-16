@@ -1,5 +1,5 @@
 # Logs
-logs
+logs/*
 *.log
 npm-debug.log*
 
@@ -31,3 +31,6 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+#php storm project
+.idea
