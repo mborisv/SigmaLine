@@ -7,4 +7,5 @@ start:
 	./run.sh
 
 stop:
+	killall ./run.sh
 	killall node ./main.js
