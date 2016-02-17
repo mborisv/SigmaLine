@@ -61,6 +61,10 @@
       return this.config.com.port = ini.safe(com);
     };
 
+    Config.prototype.getSigmaWindow = function() {
+      return ini.unsafe(this.config.sigma.window);
+    };
+
     Config.prototype.setSigmaWindow = function(window) {
       return this.config.sigma.window = ini.unsafe(window);
     };

@@ -82,13 +82,12 @@
     }
 
     Sigma.prototype.send = function(buffer) {
-      logger.log(buffer.toString());
       return this.port.open((function(_this) {
         return function(err) {
           if (err) {
             logger.log("Eror Opening Com Port " + err);
           }
-          logger.log("sending " + (buffer.toString()));
+          logger.log("sending " + (buffer.toString()) + "  json= " + (JSON.stringify(bufer)));
           return _this.port.write(buffer, function(err, res) {
             if (err) {
               logger.log("Eror Writing Com Port " + err);
@@ -109,7 +108,7 @@
         if (ch < 0x7f && ch > 0) {
           newStr += ch;
         } else if (this.LETTER_CODES[ch]) {
-          newSrt += this.LETTER_CODES[ch];
+          newStr += this.LETTER_CODES[ch];
         } else {
           newStr += '.';
         }
@@ -120,7 +119,7 @@
     Sigma.prototype.write = function(message) {
       var buffer;
       if (message == null) {
-        message = config.setSigmaWindow()(+" \\g12");
+        message = config.getSigmaWindow() + " \\g12";
       }
       buffer = this.codeString("~128~f01B\\b" + message);
       buffer = Buffer.concat([buffer, new Buffer([0, 0x0d, 0x0d, 0x0d])]);

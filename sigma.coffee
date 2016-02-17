@@ -78,10 +78,9 @@ class Sigma
 
 
   send: (buffer) ->
-    logger.log(buffer.toString())
     @port.open( (err) =>
       logger.log("Eror Opening Com Port #{err}") if err
-      logger.log("sending #{buffer.toString()}")
+      logger.log("sending #{buffer.toString()}  json= #{JSON.stringify(bufer)}")
       @port.write( buffer, (err, res) =>
         logger.log("Eror Writing Com Port #{err}") if err
         logger.log("Com Port Result #{res}") if res
@@ -94,7 +93,7 @@ class Sigma
       if ch < 0x7f && ch > 0
         newStr += ch
       else if @LETTER_CODES[ch]
-        newSrt += @LETTER_CODES[ch]
+        newStr += @LETTER_CODES[ch]
       else
         newStr += '.'
 
@@ -102,7 +101,7 @@ class Sigma
 
 
 
-  write: (message = config.setSigmaWindow() +" \\g12") ->
+  write: (message = config.getSigmaWindow() + " \\g12") ->
     buffer = @codeString("~128~f01B\\b#{message}")
     buffer = Buffer.concat([buffer, new Buffer([0, 0x0d, 0x0d, 0x0d])])
     @send(buffer)
