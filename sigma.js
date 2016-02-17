@@ -87,7 +87,7 @@
           if (err) {
             logger.log("Eror Opening Com Port " + err);
           }
-          logger.log("sending " + (buffer.toString()) + "  json= " + (JSON.stringify(bufer)));
+          logger.log("sending " + (buffer.toString()) + "  json= " + (JSON.stringify(buffer)));
           return _this.port.write(buffer, function(err, res) {
             if (err) {
               logger.log("Eror Writing Com Port " + err);
