@@ -12,62 +12,62 @@
     function Sigma() {
       this.port = new SerialPort(config.getComPort(), config.getComConfig(), false);
       this.LETTER_CODES = {
-        'А': 'A',
+        'А': 'A'.charCodeAt(0),
         'Б': 0x81,
-        'В': 'B',
+        'В': 'B'.charCodeAt(0),
         'Г': 0x83,
         'Д': 0x84,
-        'Е': 'E',
+        'Е': 'E'.charCodeAt(0),
         'Ё': 0x86,
         'Ж': 0x87,
         'З': 0x88,
         'И': 0x89,
         'Й': 0x8A,
-        'К': 'K',
+        'К': 'K'.charCodeAt(0),
         'Л': 0x8C,
-        'М': 'M',
-        'Н': 'H',
-        'О': 'O',
+        'М': 'M'.charCodeAt(0),
+        'Н': 'H'.charCodeAt(0),
+        'О': 'O'.charCodeAt(0),
         'П': 0x90,
-        'Р': 'P',
-        'С': 'C',
-        'Т': 'T',
+        'Р': 'P'.charCodeAt(0),
+        'С': 'C'.charCodeAt(0),
+        'Т': 'T'.charCodeAt(0),
         'У': 0x94,
         'Ф': 0x95,
-        'Х': 'X',
+        'Х': 'X'.charCodeAt(0),
         'Ц': 0x97,
         'Ч': 0x98,
         'Ш': 0x99,
         'Щ': 0x9A,
         'Ъ': 0x9B,
         'Ы': 0x9C,
-        'Ь': 'b',
+        'Ь': 'b'.charCodeAt(0),
         'Э': 0x9E,
         'Ю': 0x9F,
         'Я': 0xA0,
-        'а': 'a',
+        'а': 'a'.charCodeAt(0),
         'б': 0xA2,
         'в': 0xA3,
         'г': 0xA4,
         'д': 0xA5,
-        'е': 'e',
+        'е': 'e'.charCodeAt(0),
         'ё': 0xA7,
         'ж': 0xA8,
         'з': 0xA9,
         'и': 0xAA,
         'й': 0xAB,
-        'к': 'k',
+        'к': 'k'.charCodeAt(0),
         'л': 0xAD,
         'м': 0xAE,
         'н': 0xAF,
-        'о': 'o',
+        'о': 'o'.charCodeAt(0),
         'п': 0xB1,
-        'р': 'p',
-        'с': 'c',
+        'р': 'p'.charCodeAt(0),
+        'с': 'c'.charCodeAt(0),
         'т': 0xE0,
         'у': 0xE1,
         'ф': 0xE2,
-        'х': 'x',
+        'х': 'x'.charCodeAt(0),
         'ц': 0xE4,
         'ч': 0xE5,
         'ш': 0xE6,
@@ -85,34 +85,45 @@
       logger.log(buffer.toString());
       return this.port.open((function(_this) {
         return function(err) {
-          return _this.port.write(buffer, function(err, res) {});
+          if (err) {
+            logger.log("Eror Opening Com Port " + err);
+          }
+          logger.log("sending " + (buffer.toString()));
+          return _this.port.write(buffer, function(err, res) {
+            if (err) {
+              logger.log("Eror Writing Com Port " + err);
+            }
+            if (res) {
+              return logger.log("Com Port Result " + res);
+            }
+          });
         };
       })(this));
     };
 
     Sigma.prototype.codeString = function(str) {
-      var buffer, ch, i, _i, _len;
-      buffer = new Buffer(str);
-      for (ch = _i = 0, _len = buffer.length; _i < _len; ch = ++_i) {
-        i = buffer[ch];
+      var ch, i, newStr, _i, _len;
+      newStr = '';
+      for (i = _i = 0, _len = str.length; _i < _len; i = ++_i) {
+        ch = str[i];
         if (ch < 0x7f && ch > 0) {
-          buffer[i] = ch;
+          newStr += ch;
         } else if (this.LETTER_CODES[ch]) {
-          buffer[i] = this.LETTER_CODES[ch];
+          newSrt += this.LETTER_CODES[ch];
         } else {
-          buffer[i] = '.';
+          newStr += '.';
         }
       }
-      return buffer;
+      return new Buffer(newStr);
     };
 
     Sigma.prototype.write = function(message) {
       var buffer;
       if (message == null) {
-        message = "ОКНО 1 ->  \\g1";
+        message = config.setSigmaWindow()(+" \\g12");
       }
       buffer = this.codeString("~128~f01B\\b" + message);
-      Buffer.concat([buffer, new Buffer([0, 0x0d, 0x0d, 0x0d])]);
+      buffer = Buffer.concat([buffer, new Buffer([0, 0x0d, 0x0d, 0x0d])]);
       return this.send(buffer);
     };
 
