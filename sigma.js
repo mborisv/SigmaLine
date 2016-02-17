@@ -101,14 +101,14 @@
     };
 
     Sigma.prototype.codeString = function(str) {
-      var ch, i, newStr, _i, _len;
+      var ch, i, newStr, _i, _len, _ref;
       newStr = '';
       for (i = _i = 0, _len = str.length; _i < _len; i = ++_i) {
         ch = str[i];
-        if (ch < 0x7f && ch > 0) {
+        if ((0x7f > (_ref = ch.charCodeAt(0)) && _ref > 0)) {
           newStr += ch;
         } else if (this.LETTER_CODES[ch]) {
-          newStr += this.LETTER_CODES[ch];
+          newStr += String.fromCharCode(this.LETTER_CODES[ch]);
         } else {
           newStr += '.';
         }

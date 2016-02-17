@@ -90,10 +90,10 @@ class Sigma
   codeString: (str) ->
     newStr = ''
     for ch, i in str
-      if ch < 0x7f && ch > 0
+      if 0x7f > ch.charCodeAt(0) > 0
         newStr += ch
       else if @LETTER_CODES[ch]
-        newStr += @LETTER_CODES[ch]
+        newStr += String.fromCharCode(@LETTER_CODES[ch])
       else
         newStr += '.'
 
