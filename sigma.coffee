@@ -158,10 +158,13 @@ class Sigma
   writeNextInQueue: (next) ->
     free = @SIGMA_LENGTH - @win.length
     spaces = free - next.length
-    spaces = if spaces > 0 then spaces else 1
-    spaces = (new Buffer(spaces)).fill(' ').toString('')
+    if spaces < 0
+      spaces = ""
+    else
+      spaces = (new Buffer(spaces))
+      spaces.fill(' ')
 
-    @write(@color + @win + spaces + @numberColor + next)
+    @write(@color + @win + spaces.toString() + @numberColor + next)
 
 
   write: (message = '') ->

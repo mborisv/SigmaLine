@@ -197,9 +197,13 @@
       var free, spaces;
       free = this.SIGMA_LENGTH - this.win.length;
       spaces = free - next.length;
-      spaces = spaces > 0 ? spaces : 1;
-      spaces = (new Buffer(spaces)).fill(' ').toString('');
-      return this.write(this.color + this.win + spaces + this.numberColor + next);
+      if (spaces < 0) {
+        spaces = "";
+      } else {
+        spaces = new Buffer(spaces);
+        spaces.fill(' ');
+      }
+      return this.write(this.color + this.win + spaces.toString() + this.numberColor + next);
     };
 
     Sigma.prototype.write = function(message) {
