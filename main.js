@@ -10,7 +10,8 @@
     console.log('Forking in Master');
     cluster.fork();
     cluster.on('exit', function(worker, code, signal) {
-      return console.log('Error happened, fork');
+      console.log('Error happened, fork');
+      return cluster.fork();
     });
   }
 
