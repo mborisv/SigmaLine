@@ -36,6 +36,8 @@ class Config
   setComPort: (com) -> @config.com.port = ini.safe(com)
 
   getSigmaWindow: () -> ini.unsafe(@config.sigma.window)
+  getSigmaColor: () -> ini.unsafe(@config.sigma.number)
+  getSigmaNumberColor: () -> ini.unsafe(@config.sigma.numberColor)
 
   setSigmaWindow: (window) -> @config.sigma.window = ini.unsafe(window)
 

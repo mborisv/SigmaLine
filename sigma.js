@@ -10,7 +10,12 @@
 
   Sigma = (function() {
     function Sigma() {
+      this.DEFAULT_COLOR = "\\a";
+      this.SIGMA_LENGTH = 13;
       this.port = new SerialPort(config.getComPort(), config.getComConfig(), false);
+      this.win = config.getSigmaWindow();
+      this.color = this.codeColor(config.getSigmaColor());
+      this.numberColor = this.codeColor(config.getNumberColor());
       this.LETTER_CODES = {
         'А': 'A'.charCodeAt(0),
         'Б': 0x81,
@@ -100,6 +105,78 @@
       })(this));
     };
 
+    Sigma.prototype.codeColor = function(str) {
+      var color;
+      color = this.DEFAULT_COLOR;
+
+      /*
+      Не очень ясно что из этого работает, взято
+        здесь http://dz.livejournal.com/362438.html
+        и здесь http://eta4ever.livejournal.com/35676.html
+        // \a - dark red
+        // \b - red
+        // \d - light yellow
+        // \c - dark orange
+        // \e - light orange
+        // \e - very light orange
+        // \g - green
+        // \h - light green
+        // \i - rainbow
+        // \j - layers g y r
+        // \k - vert bicolor red/orange
+        // \l - vert bicolor green/red
+        // \m revers green onred
+        // \n reverse red on green
+        // \o oragnge on red
+        // \p yellow on green
+        // \q - change font char ytable
+        // \r - double width
+        // \s - (orange?) standard font
+        // \t - double size
+        // \\u - big size
+        // \v - triple size
+        // \w - half size
+       */
+      switch (str) {
+        case "dark-red":
+          color = "\\a";
+          break;
+        case "red":
+          color = "\\b";
+          break;
+        case "light-yellow":
+          color = "\\d";
+          break;
+        case "dark-orange":
+          color = "\\c";
+          break;
+        case "light-orange":
+          color = "\\e";
+          break;
+        case "green":
+          color = "\\g";
+          break;
+        case "light-green":
+          color = "\\h";
+          break;
+        case "rainbow":
+          color = "\\i";
+          break;
+        case "red-orange":
+          color = "\\k";
+          break;
+        case "green-red":
+          color = "\\l";
+          break;
+        case "orange-red":
+          color = "\\o";
+          break;
+        case "yellow-green":
+          color = "\\p";
+      }
+      return color;
+    };
+
     Sigma.prototype.codeString = function(str) {
       var ch, i, newStr, _i, _len, _ref;
       newStr = '';
@@ -116,12 +193,22 @@
       return new Buffer(newStr);
     };
 
+    Sigma.prototype.writeNextInQueue = function(next) {
+      var free, spaces;
+      free = this.SIGMA_LENGTH - this.win.length;
+      spaces = free - next.length;
+      spaces = spaces > 0 ? spaces : 1;
+      spaces = (new Array(spaces)).fill(' ').join('');
+      return this.write(this.color + this.win + spaces + this.numberColor + next);
+    };
+
     Sigma.prototype.write = function(message) {
       var buffer;
       if (message == null) {
-        message = config.getSigmaWindow() + " \\g12";
+        message = '';
       }
-      buffer = this.codeString("~128~f01B\\b" + message);
+      logger.log("Write message <" + message + "> to sigma");
+      buffer = this.codeString("~128~f01B" + message);
       buffer = Buffer.concat([buffer, new Buffer([0, 0x0d, 0x0d, 0x0d])]);
       return this.send(buffer);
     };

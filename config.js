@@ -65,6 +65,14 @@
       return ini.unsafe(this.config.sigma.window);
     };
 
+    Config.prototype.getSigmaColor = function() {
+      return ini.unsafe(this.config.sigma.number);
+    };
+
+    Config.prototype.getSigmaNumberColor = function() {
+      return ini.unsafe(this.config.sigma.numberColor);
+    };
+
     Config.prototype.setSigmaWindow = function(window) {
       return this.config.sigma.window = ini.unsafe(window);
     };

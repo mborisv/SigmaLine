@@ -14,8 +14,6 @@
 
   logger.log('starting');
 
-  sigma.write();
-
   useHttps = config.useHttps();
 
   server = useHttps ? require('https') : require('http');
@@ -69,6 +67,7 @@
     logger.log('new request');
     logger.log(req.url);
     logger.log(JSON.stringify(req.headers));
+    logger.log(JSON.stringify(parsed));
     switch (parsed.pathname) {
       case '/getConfig':
         ret.result = config.getFullConfig();
@@ -78,6 +77,9 @@
         break;
       case '/set':
         ret.result = parseSet(parsed.query);
+        break;
+      case '/next':
+        ret.result = sigma.writeNextInQueue(parsed.query.message);
         break;
       default:
         ret.error = 'Wrong command';

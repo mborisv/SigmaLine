@@ -4,7 +4,16 @@ config = require('./config.js')
 class Sigma
 
   constructor: ->
+    @DEFAULT_COLOR = "\\a"
+    @SIGMA_LENGTH = 13
+
     @port = new SerialPort(config.getComPort(), config.getComConfig(), false)
+
+    @win = config.getSigmaWindow()
+    @color = @codeColor(config.getSigmaColor())
+    @numberColor = @codeColor(config.getNumberColor())
+
+
 
     @LETTER_CODES =
       'А': 'A'.charCodeAt(0)
@@ -87,6 +96,53 @@ class Sigma
       )
     )
 
+  codeColor: (str) ->
+    color = @DEFAULT_COLOR
+    ###
+    Не очень ясно что из этого работает, взято
+      здесь http://dz.livejournal.com/362438.html
+      и здесь http://eta4ever.livejournal.com/35676.html
+      // \a - dark red
+      // \b - red
+      // \d - light yellow
+      // \c - dark orange
+      // \e - light orange
+      // \e - very light orange
+      // \g - green
+      // \h - light green
+      // \i - rainbow
+      // \j - layers g y r
+      // \k - vert bicolor red/orange
+      // \l - vert bicolor green/red
+      // \m revers green onred
+      // \n reverse red on green
+      // \o oragnge on red
+      // \p yellow on green
+      // \q - change font char ytable
+      // \r - double width
+      // \s - (orange?) standard font
+      // \t - double size
+      // \\u - big size
+      // \v - triple size
+      // \w - half size
+    ###
+    switch(str)
+      when "dark-red" then color = "\\a"
+      when "red" then color = "\\b"
+      when "light-yellow" then color = "\\d"
+      when "dark-orange" then color = "\\c"
+      when "light-orange" then color = "\\e"
+      when "green" then color = "\\g"
+      when "light-green" then color = "\\h"
+      when "rainbow" then color = "\\i"
+      when "red-orange" then color = "\\k"
+      when "green-red" then color = "\\l"
+      when "orange-red" then color = "\\o"
+      when "yellow-green" then color = "\\p"
+
+    color
+
+
   codeString: (str) ->
     newStr = ''
     for ch, i in str
@@ -99,10 +155,18 @@ class Sigma
 
     new Buffer(newStr)
 
+  writeNextInQueue: (next) ->
+    free = @SIGMA_LENGTH - @win.length
+    spaces = free - next.length
+    spaces = if spaces > 0 then spaces else 1
+    spaces = (new Array(spaces)).fill(' ').join('')
+
+    @write(@color + @win + spaces + @numberColor + next)
 
 
-  write: (message = config.getSigmaWindow() + " \\g12") ->
-    buffer = @codeString("~128~f01B\\b#{message}")
+  write: (message = '') ->
+    logger.log("Write message <#{message}> to sigma")
+    buffer = @codeString("~128~f01B#{message}")
     buffer = Buffer.concat([buffer, new Buffer([0, 0x0d, 0x0d, 0x0d])])
     @send(buffer)
 

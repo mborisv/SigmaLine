@@ -7,7 +7,7 @@ config = require('./config.js')
 logger = require('./logger.js')
 sigma = require('./sigma.js')
 logger.log('starting')
-sigma.write()
+
 useHttps = config.useHttps()
 server = if useHttps then require('https') else require('http')
 
@@ -58,11 +58,13 @@ serverCallback = (req, res) ->
   logger.log('new request')
   logger.log(req.url)
   logger.log(JSON.stringify(req.headers))
+  logger.log(JSON.stringify(parsed))
 
   switch (parsed.pathname)
     when '/getConfig' then ret.result = config.getFullConfig()
     when '/set/config' then ret.result = parseSetConfig(parsed.query)
     when '/set' then ret.result = parseSet(parsed.query)
+    when '/next' then ret.result = sigma.writeNextInQueue(parsed.query.message)
     else ret.error = 'Wrong command'
 
 
