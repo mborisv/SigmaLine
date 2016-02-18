@@ -66,8 +66,6 @@
     };
     logger.log('new request');
     logger.log(req.url);
-    logger.log(JSON.stringify(req.headers));
-    logger.log(JSON.stringify(parsed));
     switch (parsed.pathname) {
       case '/getConfig':
         ret.result = config.getFullConfig();
@@ -78,7 +76,7 @@
       case '/set':
         ret.result = parseSet(parsed.query);
         break;
-      case '/next':
+      case '/next/':
         ret.result = sigma.writeNextInQueue(parsed.query.message);
         break;
       default:

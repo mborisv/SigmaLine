@@ -15,7 +15,7 @@
       this.port = new SerialPort(config.getComPort(), config.getComConfig(), false);
       this.win = config.getSigmaWindow();
       this.color = this.codeColor(config.getSigmaColor());
-      this.numberColor = this.codeColor(config.getNumberColor());
+      this.numberColor = this.codeColor(config.getSigmaNumberColor());
       this.LETTER_CODES = {
         'А': 'A'.charCodeAt(0),
         'Б': 0x81,

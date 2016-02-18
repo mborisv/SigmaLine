@@ -11,7 +11,7 @@ class Sigma
 
     @win = config.getSigmaWindow()
     @color = @codeColor(config.getSigmaColor())
-    @numberColor = @codeColor(config.getNumberColor())
+    @numberColor = @codeColor(config.getSigmaNumberColor())
 
 
 
