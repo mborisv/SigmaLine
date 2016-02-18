@@ -159,7 +159,7 @@ class Sigma
     free = @SIGMA_LENGTH - @win.length
     spaces = free - next.length
     spaces = if spaces > 0 then spaces else 1
-    spaces = (new Array(spaces)).fill(' ').join('')
+    spaces = (new Buffer(spaces)).fill(' ').toString('')
 
     @write(@color + @win + spaces + @numberColor + next)
 
