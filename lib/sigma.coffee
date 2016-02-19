@@ -1,6 +1,6 @@
 SerialPort = require("serialport").SerialPort
-logger = require('./logger.js')
-config = require('./config.js')
+logger = require('./logger')
+config = require('./config')
 class Sigma
 
   constructor: ->

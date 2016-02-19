@@ -3,9 +3,9 @@ url = require('url')
 
 global.CONFIG_FILE = './config.ini'
 
-config = require('./config.js')
-logger = require('./logger.js')
-sigma = require('./sigma.js')
+config = require('./config')
+logger = require('./logger')
+sigma = require('./sigma')
 logger.log('starting')
 
 useHttps = config.useHttps()

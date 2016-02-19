@@ -2,6 +2,8 @@ cluster = require('cluster')
 
 console.log('Starting App')
 
+console.log(process.getgid())
+
 if (cluster.isMaster)
   console.log('Forking in Master')
   cluster.fork();
@@ -14,4 +16,4 @@ if (cluster.isMaster)
 
 if (cluster.isWorker)
   console.log('Worker begin main')
-  main = require('./server.js')
+  main = require('./server')

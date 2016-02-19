@@ -1,6 +1,6 @@
-config = require('./config.js')
+config = require('./config')
 
-class Logger extends require('./log.js')
+class Logger extends require('./log')
 
   ###
     @param file file path for log

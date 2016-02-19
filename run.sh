@@ -2,6 +2,8 @@
 #Скрипт запуска - бесконечный цикл, рассчитан на вылет программы, перезапуск с сохранением стандартного вывода
 #Первый проход цикла помещает вывод в ./logs/syslog.log, при повторном переносит предыдущий лог в OLD
 #Перезапуск через 10 секунд
+#Сохраним pid текущего процесса
+echo $$ > ./logs/run.pid
 I=1
 while [ $I -gt 0 ]; do
 	if [ $I -eq 1 ]
@@ -13,7 +15,7 @@ while [ $I -gt 0 ]; do
 	#выводим дату в лог
 	echo `date` >> ./logs/syslog.log
 	#запускаем сервер
-	node ./main.js >> ./logs/syslog.log
+	node ./node_modules/coffee-script/bin/coffee ./lib/main.coffee >> ./logs/syslog.log
 	#10 секундная пауза
 	sleep 10
 	let I=2
