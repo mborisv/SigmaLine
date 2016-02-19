@@ -1,12 +1,13 @@
 #!/bin/sh
-i=0
-while [++i]
-do
-   if [i == 1]
+I=1
+while [ $I -gt 0 ]; do
+   if [ $I -eq 1 ]
    then
-      cp ./syslog.log ./syslog.log.OLD
-      echo > ./syslog.log
+      cp ./logs/syslog.log ./logs/syslog.log.OLD
+      echo > ./logs/syslog.log
    fi
-   node ./main.js >> syslog.log
-   sleep 10
+	echo `date` >> ./logs/syslog.log
+	node ./main.js >> ./logs/syslog.log
+	sleep 10
+	let I+=1
 done
