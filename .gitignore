@@ -4,7 +4,7 @@ logs/*.log
 npm-debug.log*
 
 #Config
-#config.ini
+config.ini
 
 # Runtime data
 pids
