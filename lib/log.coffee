@@ -37,6 +37,7 @@ class Log
       file = new Error().stack.split("\n")[3].split("/").slice(-1)[0].split(")")[0].replace('.coffee', '')
     catch
       file = "undefined"
+
     "#{date}|#{file}\t|#{msg}\n"
 
 

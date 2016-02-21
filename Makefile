@@ -4,7 +4,7 @@ install:
 	make node
 
 node:
-	npm install log-rotate ini serialport coffee-script
+	npm install log-rotate ini serialport coffee-script process
 
 build:
 	cp ./lib/default.ini ./config.ini
@@ -13,6 +13,7 @@ start:
 	./run.sh &
 
 stop:
+	echo "stopping by make stop" >> ./logs/syslog.log
 	- kill -- `cat ./logs/run.pid`
 	- killall node ./node_modules/coffee-script/bin/coffee ./lib/main.coffee
 	echo > ./logs/run.pid

@@ -36,7 +36,7 @@ class Config
 
   setSigmaWindow: (window) -> @config.sigma.window = ini.unsafe(window)
   setSigmaColor: (color) -> @config.sigma.color = ini.unsafe(color)
-  setSigmaNumberColor: (color) -> @config.sigma.color = ini.unsafe(color)
+  setSigmaNumberColor: (color) -> @config.sigma.numberColor = ini.unsafe(color)
 
   setServerHost: (host) -> @config.server.host = ini.unsafe(host)
   setServerPort: (port) -> @config.server.port = ini.unsafe(port)
