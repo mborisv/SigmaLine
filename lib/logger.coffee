@@ -8,7 +8,7 @@ class Logger extends require('./log')
     @param count - количество файлов для rotate 0 - отключено
   ###
   constructor: () ->
-    super config.getLogPath() + 'sigma.log', config.getLogSize(), config.getLogRotate()
+    super config.getLogPath() + LOG_FILE_NAME, config.getLogSize(), config.getLogRotate()
 
 
 module.exports = new Logger()

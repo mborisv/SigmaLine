@@ -7,11 +7,7 @@ class Sigma
     @DEFAULT_COLOR = "\\a"
     @SIGMA_LENGTH = 13
 
-    @port = new SerialPort(config.getComPort(), config.getComConfig(), false)
-
-    @win = config.getSigmaWindow()
-    @color = @codeColor(config.getSigmaColor())
-    @numberColor = @codeColor(config.getSigmaNumberColor())
+    @readConfig()
 
 
 
@@ -85,6 +81,11 @@ class Sigma
       'ю': 0xEC
       'я': 0xED
 
+  readConfig: ->
+    @port = new SerialPort(config.getComPort(), config.getComConfig(), false)
+    @win = config.getSigmaWindow()
+    @color = @codeColor(config.getSigmaColor())
+    @numberColor = @codeColor(config.getSigmaNumberColor())
 
   send: (buffer) ->
     @port.open( (err) =>

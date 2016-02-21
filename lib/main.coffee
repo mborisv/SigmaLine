@@ -1,8 +1,11 @@
 cluster = require('cluster')
+fs = require('fs')
+process = require('process')
+require('./const')
 
-console.log('Starting App')
+console.log("Starting App, pid = #{process.pid}")
 
-console.log(process.getgid())
+fs.appendFile(PID_FILE, process.pid, flag: 'a+', (err) => throw err if err )
 
 if (cluster.isMaster)
   console.log('Forking in Master')

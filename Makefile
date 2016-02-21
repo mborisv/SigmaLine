@@ -11,5 +11,6 @@ start:
 
 stop:
 	- kill -- `cat ./logs/run.pid`
-	killall node ./node_modules/coffee-script/bin/coffee ./lib/main.coffee
+	- killall node ./node_modules/coffee-script/bin/coffee ./lib/main.coffee
+	echo > ./logs/run.pid
 

@@ -4,13 +4,11 @@ fs = require('fs')
 class Config
 
   constructor: ->
-    @config = ini.parse(fs.readFileSync(global.CONFIG_FILE, 'utf-8'))
-    console.log("Config file #{global.CONFIG_FILE} loaded")
+    @config = ini.parse(fs.readFileSync(CONFIG_FILE, 'utf-8'))
+    console.log("Config file #{CONFIG_FILE} loaded")
 
   getHost: -> ini.unsafe(@config.server.host)
-
   getPort: -> ini.unsafe(@config.server.port)
-
   getComPort: -> ini.unsafe(@config.com.port)
 
   getComConfig: ->
@@ -22,35 +20,30 @@ class Config
     }
 
   getLogPath: -> ini.unsafe(@config.log.path)
-
   getLogSize: -> ini.unsafe(@config.log.size)
-
   getLogRotate: -> ini.unsafe(@config.log.rotate)
 
   useHttps: -> parseInt(ini.unsafe(@config.server.https))
+  getHttpsConfig: ->
+    key: fs.readFileSync(ini.unsafe(@config.server.httpsKey))
+    cert: fs.readFileSync(ini.unsafe(@config.server.httpsCert))
 
-  getHttpsKey: -> ini.unsafe(@config.server.httpsKey)
-
-  getHttpsCert: -> ini.unsafe(@config.server.httpsCert)
-
-  setComPort: (com) -> @config.com.port = ini.safe(com)
+  getAdminKey: -> ini.unsafe(@config.admin.key)
 
   getSigmaWindow: () -> ini.unsafe(@config.sigma.window)
-  getSigmaColor: () -> ini.unsafe(@config.sigma.number)
+  getSigmaColor: () -> ini.unsafe(@config.sigma.color)
   getSigmaNumberColor: () -> ini.unsafe(@config.sigma.numberColor)
 
   setSigmaWindow: (window) -> @config.sigma.window = ini.unsafe(window)
-
   setSigmaColor: (color) -> @config.sigma.color = ini.unsafe(color)
-
   setSigmaNumberColor: (color) -> @config.sigma.color = ini.unsafe(color)
 
+  setServerHost: (host) -> @config.server.host = ini.unsafe(host)
+  setServerPort: (port) -> @config.server.port = ini.unsafe(port)
+
+  setComPort: (com) -> @config.com.port = ini.safe(com)
 
   save: ->
-    fs.writeFileSync(global.CONFIG_FILE, ini.stringify(@config))
-
-  getFullConfig: ->
-    @config
-
+    fs.writeFileSync(CONFIG_FILE, ini.stringify(@config))
 
 module.exports = new Config()

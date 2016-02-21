@@ -34,7 +34,7 @@ class Log
       + ('0'+date.getMinutes()).slice(-2) + ':' \
       + ('0'+date.getSeconds()).slice(-2)
     try
-      file = new Error().stack.split("\n")[3].split("/").slice(-1)[0].split(")")[0]
+      file = new Error().stack.split("\n")[3].split("/").slice(-1)[0].split(")")[0].replace('.coffee', '')
     catch
       file = "undefined"
     "#{date}|#{file}\t|#{msg}\n"
