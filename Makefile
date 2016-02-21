@@ -6,6 +6,10 @@ install:
 node:
 	npm install log-rotate ini serialport coffee-script process
 
+update:
+	git reset --hard
+	git pull
+
 build:
 	cp ./lib/default.ini ./config.ini
 
@@ -17,4 +21,3 @@ stop:
 	- kill -- `cat ./logs/run.pid`
 	- killall node ./node_modules/coffee-script/bin/coffee ./lib/main.coffee
 	echo > ./logs/run.pid
-
