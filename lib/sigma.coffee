@@ -90,7 +90,6 @@ class Sigma
   send: (buffer) ->
     @port.open( (err) =>
       logger.log("Eror Opening Com Port #{err}") if err
-      logger.log("sending #{buffer.toString()}  json= #{JSON.stringify(buffer)}")
       @port.write( buffer, (err, res) =>
         logger.log("Eror Writing Com Port #{err}") if err
         logger.log("Com Port Result #{res}") if res

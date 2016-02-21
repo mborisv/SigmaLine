@@ -39,14 +39,14 @@ indexPage = ->
   <html>
   <body>
     <br>Message text line to sigma:
-    <div><form target='frame' action="/line/" method="GET"><input name='message' type='text'/> <button type='submit'>send text</button></form></div>
+    <div><form target='frame' action='/line/' method='GET'><input name='message' type='text'/> <button type='submit'>send text</button></form></div>
     Possible colors in message: dark-red(\\a),&nbsp;&nbsp;&nbsp;red(\\b),&nbsp;&nbsp;&nbsp;light-yellow(\\d),&nbsp;&nbsp;&nbsp;yellow-green(\\p)<br>
     dark-orange (\\c),&nbsp;&nbsp;&nbsp;light-orange(\\e),&nbsp;&nbsp;&nbsp;green(\\g),&nbsp;&nbsp;&nbsp;,orange-red(\\o),&nbsp;&nbsp;&nbsp;light-green(\\h)<br>
     rainbow(\\i),&nbsp;&nbsp;&nbsp;red-orange(\\k),&nbsp;&nbsp;&nbsp;green-red(\\l)
     <br>New number in queue:
-    <div><form target='frame' action="/next/" method="GET"><input name='message' type='text'/> <button type='submit'>send next in queue</button></form></div>
+    <div><form target='frame' action='/next/' method='GET'><input name='message' type='text'/> <button type='submit'>send next in queue</button></form></div>
     <br>Setup:
-    <div><form target='frame' action="/set/" method="GET">
+    <div><form target='frame' action='/set/' method='GET'><input type='hidden' name='key' value='#{config.getAdminKey()}'/>
       SigmaWindowColor: <input name='sigmaColor' type='text' value='#{config.getSigmaColor()}'/><br>
       SigmaNumberColor: <input name='sigmaNumberColor' type='text' value='#{config.getSigmaNumberColor()}'/><br>
       SigmaWindowText: <input name='sigmaWindow' type='text' value='#{config.getSigmaWindow()}'/><br>
