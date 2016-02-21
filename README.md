@@ -9,7 +9,7 @@ sudo apt-get install git
 cd path/to/your/dir
 git clone https://github.com/mborisv/SigmaLine.git ./
 make install
-make build
+make build - копирует конфиг по умолчанию
 
 Редактируем config.ini
 Настраиываем ком порт
