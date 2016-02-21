@@ -1,6 +1,9 @@
 
 install:
 	sudo apt-get install nodejs npm build-essential nodejs-legacy
+	make node
+
+node:
 	npm install log-rotate ini serialport coffee-script
 
 build:
