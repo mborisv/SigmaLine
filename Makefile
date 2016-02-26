@@ -1,3 +1,4 @@
+.PHONY: install node update build start stop
 
 install:
 	sudo apt-get install nodejs npm build-essential nodejs-legacy
